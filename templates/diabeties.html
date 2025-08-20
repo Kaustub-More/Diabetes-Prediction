@@ -1,0 +1,1790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DiaCare Pro - Diabetes Risk Assessment</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+      min-height: 100vh;
+      padding: 20px;
+      position: relative;
+      overflow-x: hidden;
+      transition: background 0.8s ease;
+    }
+
+    /* Enhanced animated background elements with moving shapes */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background:
+        radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(255, 255, 255, 0.06) 0%, transparent 30%);
+      animation: backgroundMove 25s ease-in-out infinite;
+      z-index: -1;
+    }
+
+    @keyframes backgroundMove {
+      0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+        opacity: 1;
+      }
+      25% {
+        transform: translateY(-20px) rotate(2deg);
+        opacity: 0.8;
+      }
+      50% {
+        transform: translateY(-40px) rotate(0deg);
+        opacity: 0.9;
+      }
+      75% {
+        transform: translateY(-20px) rotate(-2deg);
+        opacity: 0.8;
+      }
+    }
+
+    /* Moving background shapes */
+    .background-shapes {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .shape {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.1;
+      animation-timing-function: ease-in-out;
+      animation-iteration-count: infinite;
+      animation-direction: alternate;
+    }
+
+    .shape-1 {
+      width: 300px;
+      height: 300px;
+      background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+      top: 10%;
+      left: 10%;
+      animation: float1 20s infinite;
+    }
+
+    .shape-2 {
+      width: 200px;
+      height: 200px;
+      background: linear-gradient(45deg, #4ecdc4, #44a08d);
+      top: 60%;
+      right: 15%;
+      animation: float2 25s infinite;
+    }
+
+    .shape-3 {
+      width: 150px;
+      height: 150px;
+      background: linear-gradient(45deg, #fdbb2d, #22c1c3);
+      bottom: 20%;
+      left: 20%;
+      animation: float3 30s infinite;
+    }
+
+    .shape-4 {
+      width: 250px;
+      height: 250px;
+      background: linear-gradient(45deg, #667eea, #764ba2);
+      top: 30%;
+      right: 30%;
+      animation: float4 35s infinite;
+    }
+
+    .shape-5 {
+      width: 180px;
+      height: 180px;
+      background: linear-gradient(45deg, #f093fb, #f5576c);
+      bottom: 40%;
+      right: 10%;
+      animation: float5 28s infinite;
+    }
+
+    .shape-6 {
+      width: 120px;
+      height: 120px;
+      background: linear-gradient(45deg, #4facfe, #00f2fe);
+      top: 15%;
+      left: 60%;
+      animation: float6 22s infinite;
+    }
+
+    .shape-7 {
+      width: 220px;
+      height: 220px;
+      background: linear-gradient(45deg, #43e97b, #38f9d7);
+      bottom: 10%;
+      right: 40%;
+      animation: float7 32s infinite;
+    }
+
+    .shape-8 {
+      width: 160px;
+      height: 160px;
+      background: linear-gradient(45deg, #fa709a, #fee140);
+      top: 70%;
+      left: 40%;
+      animation: float8 26s infinite;
+    }
+
+    /* Floating animations with different patterns */
+    @keyframes float1 {
+      0%, 100% {
+        transform: translate(0, 0) rotate(0deg) scale(1);
+        opacity: 0.1;
+      }
+      25% {
+        transform: translate(30px, -40px) rotate(90deg) scale(1.1);
+        opacity: 0.15;
+      }
+      50% {
+        transform: translate(-20px, -80px) rotate(180deg) scale(0.9);
+        opacity: 0.08;
+      }
+      75% {
+        transform: translate(-50px, -40px) rotate(270deg) scale(1.05);
+        opacity: 0.12;
+      }
+    }
+
+    @keyframes float2 {
+      0%, 100% {
+        transform: translate(0, 0) rotate(0deg) scale(1);
+        opacity: 0.1;
+      }
+      33% {
+        transform: translate(-40px, 30px) rotate(120deg) scale(1.2);
+        opacity: 0.12;
+      }
+      66% {
+        transform: translate(20px, -60px) rotate(240deg) scale(0.8);
+        opacity: 0.08;
+      }
+    }
+
+    @keyframes float3 {
+      0%, 100% {
+        transform: translate(0, 0) rotate(0deg) scale(1);
+        opacity: 0.1;
+      }
+      20% {
+        transform: translate(60px, -20px) rotate(72deg) scale(1.1);
+        opacity: 0.14;
+      }
+      40% {
+        transform: translate(20px, -70px) rotate(144deg) scale(0.9);
+        opacity: 0.09;
+      }
+      60% {
+        transform: translate(-30px, -50px) rotate(216deg) scale(1.05);
+        opacity: 0.11;
+      }
+      80% {
+        transform: translate(-60px, -10px) rotate(288deg) scale(0.95);
+        opacity: 0.13;
+      }
+    }
+
+    @keyframes float4 {
+      0%, 100% {
+        transform: translate(0, 0) rotate(0deg) scale(1);
+        opacity: 0.08;
+      }
+      50% {
+        transform: translate(-70px, 50px) rotate(180deg) scale(1.3);
+        opacity: 0.12;
+      }
+    }
+
+    @keyframes float5 {
+      0%, 100% {
+        transform: translate(0, 0) rotate(0deg) scale(1);
+        opacity: 0.1;
+      }
+      25% {
+        transform: translate(40px, 60px) rotate(90deg) scale(0.8);
+        opacity: 0.15;
+      }
+      50% {
+        transform: translate(-30px, 40px) rotate(180deg) scale(1.1);
+        opacity: 0.08;
+      }
+      75% {
+        transform: translate(-60px, -20px) rotate(270deg) scale(0.9);
+        opacity: 0.12;
+      }
+    }
+
+    @keyframes float6 {
+      0%, 100% {
+        transform: translate(0, 0) rotate(0deg) scale(1);
+        opacity: 0.12;
+      }
+      33% {
+        transform: translate(50px, -30px) rotate(120deg) scale(1.2);
+        opacity: 0.08;
+      }
+      66% {
+        transform: translate(-40px, 70px) rotate(240deg) scale(0.85);
+        opacity: 0.14;
+      }
+    }
+
+    @keyframes float7 {
+      0%, 100% {
+        transform: translate(0, 0) rotate(0deg) scale(1);
+        opacity: 0.09;
+      }
+      40% {
+        transform: translate(-80px, -40px) rotate(144deg) scale(1.15);
+        opacity: 0.13;
+      }
+      80% {
+        transform: translate(60px, -80px) rotate(288deg) scale(0.9);
+        opacity: 0.11;
+      }
+    }
+
+    @keyframes float8 {
+      0%, 100% {
+        transform: translate(0, 0) rotate(0deg) scale(1);
+        opacity: 0.11;
+      }
+      30% {
+        transform: translate(-50px, -60px) rotate(108deg) scale(1.1);
+        opacity: 0.08;
+      }
+      60% {
+        transform: translate(70px, -30px) rotate(216deg) scale(0.95);
+        opacity: 0.14;
+      }
+    }
+
+    /* Floating particles */
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.6);
+      border-radius: 50%;
+      animation: particleFloat 15s infinite linear;
+    }
+
+    .particle:nth-child(odd) {
+      animation-duration: 20s;
+      background: rgba(255, 255, 255, 0.4);
+    }
+
+    .particle:nth-child(3n) {
+      animation-duration: 25s;
+      background: rgba(255, 255, 255, 0.3);
+      width: 6px;
+      height: 6px;
+    }
+
+    @keyframes particleFloat {
+      0% {
+        transform: translateY(100vh) translateX(0) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100px) translateX(100px) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* Color Picker Toggle Button */
+    .color-picker-toggle {
+      position: fixed;
+      top: 25px;
+      right: 25px;
+      z-index: 1001;
+      width: 60px;
+      height: 60px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow:
+        0 10px 25px rgba(0, 0, 0, 0.15),
+        0 0 0 1px rgba(255, 255, 255, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      animation: slideInRight 0.8s ease-out;
+    }
+
+    .color-picker-toggle:hover {
+      transform: scale(1.1) rotate(10deg);
+      box-shadow:
+        0 15px 35px rgba(0, 0, 0, 0.2),
+        0 0 0 2px rgba(255, 255, 255, 0.4);
+    }
+
+    .color-picker-toggle.active {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      transform: scale(1.05);
+    }
+
+    .color-picker-toggle i {
+      font-size: 24px;
+      color: #667eea;
+      transition: all 0.3s ease;
+    }
+
+    .color-picker-toggle.active i {
+      color: white;
+      transform: rotate(180deg);
+    }
+
+    /* Background Color Picker Panel */
+    .color-picker-container {
+      position: fixed;
+      top: 100px;
+      right: 25px;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(25px);
+      padding: 25px;
+      border-radius: 20px;
+      box-shadow:
+        0 20px 40px rgba(0, 0, 0, 0.15),
+        0 0 0 1px rgba(255, 255, 255, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      transform: translateX(120%);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      min-width: 300px;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+
+    .color-picker-container.show {
+      transform: translateX(0);
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .color-picker-container::before {
+      content: '';
+      position: absolute;
+      top: -20px;
+      right: 30px;
+      width: 0;
+      height: 0;
+      border-left: 15px solid transparent;
+      border-right: 15px solid transparent;
+      border-bottom: 20px solid rgba(255, 255, 255, 0.95);
+    }
+
+    .color-picker-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #2d3748;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-align: center;
+      justify-content: center;
+    }
+
+    .color-picker-title i {
+      color: #667eea;
+      font-size: 18px;
+    }
+
+    /* Section labels for organizing color options */
+    .section-label {
+      grid-column: 1 / -1;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #4a5568;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      opacity: 0.8;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      text-align: center;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      padding-bottom: 5px;
+    }
+
+    .color-options {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .color-option {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 3px solid transparent;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .color-option:hover {
+      transform: scale(1.15);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    .color-option.active {
+      border-color: #ffffff;
+      transform: scale(1.2);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    .color-option::after {
+      content: '✓';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      font-weight: bold;
+      font-size: 18px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
+    }
+
+    .color-option.active::after {
+      opacity: 1;
+    }
+
+    /* Enhanced gradient options */
+    .color-option.gradient-1 {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    }
+
+    .color-option.gradient-2 {
+      background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+    }
+
+    .color-option.gradient-3 {
+      background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+    }
+
+    .color-option.gradient-4 {
+      background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+    }
+
+    .color-option.gradient-5 {
+      background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+    }
+
+    .color-option.gradient-6 {
+      background: linear-gradient(135deg, #a8e6cf 0%, #dcedc1 100%);
+    }
+
+    .color-option.gradient-7 {
+      background: linear-gradient(135deg, #ffd3a5 0%, #fd9853 100%);
+    }
+
+    .color-option.gradient-8 {
+      background: linear-gradient(135deg, #ebbba7 0%, #cfc7f8 100%);
+    }
+
+    .color-option.gradient-9 {
+      background: linear-gradient(135deg, #c3cfe2 0%, #c3cfe2 100%);
+    }
+
+    /* Additional gradients */
+    .color-option.gradient-10 {
+      background: linear-gradient(135deg, #3a7bd5, #3a6073);
+    }
+
+    .color-option.gradient-11 {
+      background: linear-gradient(135deg, #fc5c7d, #6a82fb);
+    }
+
+    .color-option.gradient-12 {
+      background: linear-gradient(135deg, #36d1dc, #5b86e5);
+    }
+
+    /* Solid colors */
+    .color-option.solid-1 { background: #0ea5e9; }
+    .color-option.solid-2 { background: #10b981; }
+    .color-option.solid-3 { background: #f43f5e; }
+    .color-option.solid-4 { background: #f59e0b; }
+    .color-option.solid-5 { background: #8b5cf6; }
+    .color-option.solid-6 { background: #14b8a6; }
+    .color-option.solid-7 { background: #111827; }
+    .color-option.solid-8 { background: #1f2937; }
+
+    /* Custom color picker */
+    .custom-color {
+      grid-column: span 3;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(0,0,0,0.04);
+      border: 1px solid rgba(0,0,0,0.06);
+      padding: 10px 12px;
+      border-radius: 12px;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .custom-color:hover {
+      background: rgba(0,0,0,0.06);
+      transform: translateY(-1px);
+    }
+
+    .custom-color input[type="color"] {
+      -webkit-appearance: none;
+      appearance: none;
+      border: none;
+      background: transparent;
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      padding: 0;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    .custom-color span {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #2d3748;
+    }
+
+    .reset-btn {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .reset-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+    }
+
+    @keyframes slideInRight {
+      from {
+        opacity: 0;
+        transform: translateX(100px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      animation: fadeInUp 0.8s ease-out;
+      position: relative;
+      z-index: 1;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Enhanced Header */
+    .header {
+      text-align: center;
+      color: white;
+      margin-bottom: 50px;
+      animation: fadeInDown 0.8s ease-out;
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 25px;
+    }
+
+    .logo {
+      width: 70px;
+      height: 70px;
+      background: linear-gradient(135deg, #ff6b6b, #ee5a24, #ff9f43);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      box-shadow:
+        0 10px 30px rgba(255, 107, 107, 0.4),
+        0 0 0 4px rgba(255, 255, 255, 0.1);
+      animation: logoFloat 3s ease-in-out infinite;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .logo::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transform: rotate(45deg);
+      animation: logoShine 4s linear infinite;
+    }
+
+    @keyframes logoFloat {
+      0%, 100% { transform: scale(1) translateY(0px); }
+      50% { transform: scale(1.05) translateY(-5px); }
+    }
+
+    @keyframes logoShine {
+      0% { transform: translateX(-200%) translateY(-200%) rotate(45deg); }
+      100% { transform: translateX(200%) translateY(200%) rotate(45deg); }
+    }
+
+    .title {
+      font-size: 3.8rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+      text-shadow:
+        0 4px 15px rgba(0, 0, 0, 0.3),
+        0 0 30px rgba(255, 255, 255, 0.2);
+      background: linear-gradient(45deg, #ffffff, #f8f9fa, #e2e8f0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: titleGlow 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes titleGlow {
+      0% { filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.3)); }
+      100% { filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.6)); }
+    }
+
+    .subtitle {
+      font-size: 1.4rem;
+      font-weight: 300;
+      opacity: 0.95;
+      letter-spacing: 1px;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Enhanced Form Card */
+    .form-card {
+      background: rgba(255, 255, 255, 0.97);
+      backdrop-filter: blur(25px);
+      border-radius: 30px;
+      padding: 60px 50px;
+      box-shadow:
+        0 30px 60px rgba(0, 0, 0, 0.12),
+        0 0 0 1px rgba(255, 255, 255, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      position: relative;
+      overflow: hidden;
+      animation: slideInUp 0.8s ease-out 0.3s both;
+      transform: perspective(1000px);
+    }
+
+    @keyframes slideInUp {
+      from {
+        opacity: 0;
+        transform: translateY(50px) rotateX(10deg);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) rotateX(0deg);
+      }
+    }
+
+    .form-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: linear-gradient(90deg, #667eea, #764ba2, #f093fb, #667eea);
+      background-size: 300% 100%;
+      animation: gradientMove 4s ease infinite;
+    }
+
+    @keyframes gradientMove {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    .form-title {
+      font-size: 2.5rem;
+      font-weight: 800;
+      text-align: center;
+      margin-bottom: 20px;
+      color: #2d3748;
+      background: linear-gradient(135deg, #667eea, #764ba2, #f093fb);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      position: relative;
+    }
+
+    .form-description {
+      text-align: center;
+      color: #718096;
+      margin-bottom: 45px;
+      font-size: 1.15rem;
+      line-height: 1.7;
+      font-weight: 400;
+    }
+
+    /* Enhanced Progress Bar */
+    .progress-container {
+      margin-bottom: 45px;
+      padding: 25px;
+      background: linear-gradient(135deg, #f7fafc, #edf2f7);
+      border-radius: 20px;
+      border: 1px solid #e2e8f0;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.06);
+    }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      font-weight: 600;
+      color: #4a5568;
+      font-size: 1rem;
+    }
+
+    .progress-bar {
+      height: 10px;
+      background: linear-gradient(135deg, #e2e8f0, #cbd5e0);
+      border-radius: 15px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+      border-radius: 15px;
+      width: 0%;
+      transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      box-shadow: 0 0 10px rgba(102, 126, 234, 0.5);
+    }
+
+    .progress-fill::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: -30px;
+      width: 30px;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.7), transparent);
+      animation: progressGlow 2.5s ease-in-out infinite;
+    }
+
+    @keyframes progressGlow {
+      0%, 100% { transform: translateX(0); opacity: 0; }
+      50% { transform: translateX(20px); opacity: 1; }
+    }
+
+    /* Enhanced Form Grid with proper spacing */
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 35px;
+      margin-bottom: 50px;
+    }
+
+    /* Fixed form group spacing to prevent overlap */
+    .form-group {
+      position: relative;
+      margin-bottom: 75px;
+      animation: slideInLeft 0.6s ease-out;
+      animation-fill-mode: both;
+    }
+
+    .form-group:nth-child(1) { animation-delay: 0.1s; }
+    .form-group:nth-child(2) { animation-delay: 0.2s; }
+    .form-group:nth-child(3) { animation-delay: 0.3s; }
+    .form-group:nth-child(4) { animation-delay: 0.4s; }
+    .form-group:nth-child(5) { animation-delay: 0.5s; }
+    .form-group:nth-child(6) { animation-delay: 0.6s; }
+    .form-group:nth-child(7) { animation-delay: 0.7s; }
+    .form-group:nth-child(8) { animation-delay: 0.8s; }
+
+    @keyframes slideInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .form-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 600;
+      color: #2d3748;
+      margin-bottom: 10px;
+      font-size: 1rem;
+      letter-spacing: 0.3px;
+    }
+
+    .form-label i {
+      color: #667eea;
+      width: 20px;
+      text-align: center;
+      font-size: 18px;
+    }
+
+    .input-container {
+      position: relative;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 18px 22px;
+      border: 2px solid #e2e8f0;
+      border-radius: 15px;
+      font-size: 1.05rem;
+      font-weight: 500;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      background: #ffffff;
+      color: #2d3748;
+      font-family: 'Poppins', sans-serif;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+
+    .form-input::placeholder {
+      color: #a0aec0;
+      font-weight: 400;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: #667eea;
+      background: #ffffff;
+      box-shadow:
+        0 0 0 4px rgba(102, 126, 234, 0.12),
+        0 8px 20px rgba(102, 126, 234, 0.15),
+        0 2px 8px rgba(0, 0, 0, 0.04);
+      transform: translateY(-3px) scale(1.01);
+    }
+
+    .form-input:hover:not(:focus) {
+      border-color: #cbd5e0;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      transform: translateY(-1px);
+    }
+
+    /* Fixed and enhanced input status hints */
+    .input-status {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      margin-top: 10px;
+      padding: 8px 15px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      opacity: 0;
+      transform: translateY(-10px) scale(0.95);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      pointer-events: none;
+      z-index: 10;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .input-status.show {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .input-status.success {
+      background: linear-gradient(135deg, #c6f6d5, #9ae6b4);
+      color: #22543d;
+      border: 1px solid #68d391;
+    }
+
+    .input-status.warning {
+      background: linear-gradient(135deg, #feebc8, #fbd38d);
+      color: #c05621;
+      border: 1px solid #f6ad55;
+    }
+
+    .input-status.error {
+      background: linear-gradient(135deg, #fed7d7, #feb2b2);
+      color: #c53030;
+      border: 1px solid #fc8181;
+    }
+
+    /* Enhanced Submit Button */
+    .submit-container {
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    .submit-btn {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+      color: white;
+      border: none;
+      padding: 20px 50px;
+      border-radius: 60px;
+      font-size: 1.15rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      display: inline-flex;
+      align-items: center;
+      gap: 15px;
+      box-shadow:
+        0 10px 30px rgba(102, 126, 234, 0.4),
+        0 0 0 3px rgba(255, 255, 255, 0.1);
+      position: relative;
+      overflow: hidden;
+      min-width: 250px;
+      justify-content: center;
+      font-family: 'Poppins', sans-serif;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .submit-btn:hover:not(:disabled) {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow:
+        0 15px 40px rgba(102, 126, 234, 0.5),
+        0 0 0 3px rgba(255, 255, 255, 0.2);
+    }
+
+    .submit-btn:active {
+      transform: translateY(-2px) scale(1.01);
+    }
+
+    .submit-btn:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+    }
+
+    .submit-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.8s ease;
+    }
+
+    .submit-btn:hover::before {
+      left: 100%;
+    }
+
+    .loading-spinner {
+      width: 22px;
+      height: 22px;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-top: 3px solid white;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      display: none;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Enhanced Footer */
+    .footer {
+      text-align: center;
+      color: rgba(255, 255, 255, 0.9);
+      margin-top: 50px;
+      font-size: 1rem;
+      animation: fadeIn 1s ease-out 1.5s both;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* Enhanced Responsive Design */
+    @media (max-width: 768px) {
+      .background-shapes .shape {
+        opacity: 0.05;
+      }
+
+      .color-picker-toggle {
+        top: 15px;
+        right: 15px;
+        width: 50px;
+        height: 50px;
+      }
+
+      .color-picker-toggle i {
+        font-size: 20px;
+      }
+
+      .color-picker-container {
+        top: 80px;
+        right: 15px;
+        left: 15px;
+        width: auto;
+        min-width: auto;
+        padding: 20px;
+        border-radius: 15px;
+      }
+
+      .color-picker-container::before {
+        right: 25px;
+      }
+
+      .color-options {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+      }
+
+      .color-option {
+        width: 40px;
+        height: 40px;
+      }
+
+      .title {
+        font-size: 2.8rem;
+      }
+
+      .form-card {
+        padding: 40px 30px;
+        margin: 0 15px;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+        gap: 25px;
+      }
+
+      .form-group {
+        margin-bottom: 85px;
+      }
+
+      .submit-btn {
+        width: 100%;
+        max-width: 320px;
+        padding: 18px 40px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 15px;
+      }
+
+      .background-shapes .shape {
+        opacity: 0.03;
+      }
+
+      .color-picker-toggle {
+        top: 10px;
+        right: 10px;
+        width: 45px;
+        height: 45px;
+      }
+
+      .color-picker-toggle i {
+        font-size: 18px;
+      }
+
+      .color-picker-container {
+        top: 70px;
+        right: 10px;
+        left: 10px;
+        padding: 15px;
+      }
+
+      .color-options {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+      }
+
+      .color-option {
+        width: 35px;
+        height: 35px;
+      }
+
+      .title {
+        font-size: 2.2rem;
+      }
+
+      .form-card {
+        padding: 30px 20px;
+      }
+
+      .form-title {
+        font-size: 2rem;
+      }
+
+      .form-group {
+        margin-bottom: 90px;
+      }
+
+      .form-input {
+        padding: 16px 18px;
+        font-size: 1rem;
+      }
+    }
+
+    /* Additional beautiful enhancements */
+    .form-card:hover {
+      transform: translateY(-2px);
+      box-shadow:
+        0 35px 70px rgba(0, 0, 0, 0.15),
+        0 0 0 1px rgba(255, 255, 255, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    }
+
+    .input-container:hover .form-input:not(:focus) {
+      border-color: #a0aec0;
+    }
+
+    /* Subtle animations for form elements */
+    .form-group:hover {
+      transform: translateY(-2px);
+    }
+
+    .progress-container:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    /* Click outside to close functionality */
+    .color-picker-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 999;
+      background: transparent;
+      display: none;
+    }
+
+    .color-picker-overlay.show {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <!-- Moving Background Shapes -->
+  <div class="background-shapes">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="shape shape-3"></div>
+    <div class="shape shape-4"></div>
+    <div class="shape shape-5"></div>
+    <div class="shape shape-6"></div>
+    <div class="shape shape-7"></div>
+    <div class="shape shape-8"></div>
+  </div>
+
+  <!-- Floating Particles -->
+  <div class="particles" id="particles"></div>
+
+  <!-- Color Picker Toggle Button -->
+  <div class="color-picker-toggle" id="colorPickerToggle" title="Customize Background">
+    <i class="fas fa-palette"></i>
+  </div>
+
+  <!-- Click outside overlay -->
+  <div class="color-picker-overlay" id="colorPickerOverlay"></div>
+
+  <!-- Background Color Picker Panel -->
+  <div class="color-picker-container" id="colorPickerContainer">
+    <div class="color-picker-title">
+      <i class="fas fa-palette"></i>
+      Background Themes
+    </div>
+    <div class="color-options">
+      <!-- Gradients Section -->
+      <div class="section-label">Gradients</div>
+      <div class="color-option gradient-1 active" data-type="gradient" data-gradient="linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%)" title="Default Purple"></div>
+      <div class="color-option gradient-2" data-type="gradient" data-gradient="linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%)" title="Pink Sunset"></div>
+      <div class="color-option gradient-3" data-type="gradient" data-gradient="linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)" title="Mint Dream"></div>
+      <div class="color-option gradient-4" data-type="gradient" data-gradient="linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)" title="Peach Glow"></div>
+      <div class="color-option gradient-5" data-type="gradient" data-gradient="linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%)" title="Ocean Breeze"></div>
+      <div class="color-option gradient-6" data-type="gradient" data-gradient="linear-gradient(135deg, #a8e6cf 0%, #dcedc1 100%)" title="Fresh Green"></div>
+      <div class="color-option gradient-7" data-type="gradient" data-gradient="linear-gradient(135deg, #ffd3a5 0%, #fd9853 100%)" title="Warm Orange"></div>
+      <div class="color-option gradient-8" data-type="gradient" data-gradient="linear-gradient(135deg, #ebbba7 0%, #cfc7f8 100%)" title="Lavender Mist"></div>
+      <div class="color-option gradient-9" data-type="gradient" data-gradient="linear-gradient(135deg, #c3cfe2 0%, #c3cfe2 100%)" title="Cool Gray"></div>
+      <div class="color-option gradient-10" data-type="gradient" data-gradient="linear-gradient(135deg, #3a7bd5, #3a6073)" title="Deep Ocean"></div>
+      <div class="color-option gradient-11" data-type="gradient" data-gradient="linear-gradient(135deg, #fc5c7d, #6a82fb)" title="Aurora"></div>
+      <div class="color-option gradient-12" data-type="gradient" data-gradient="linear-gradient(135deg, #36d1dc, #5b86e5)" title="Sky Flow"></div>
+
+      <!-- Solids Section -->
+      <div class="section-label">Solids</div>
+      <div class="color-option solid-1" data-type="solid" data-color="#0ea5e9" title="Sky Blue"></div>
+      <div class="color-option solid-2" data-type="solid" data-color="#10b981" title="Emerald"></div>
+      <div class="color-option solid-3" data-type="solid" data-color="#f43f5e" title="Rose"></div>
+      <div class="color-option solid-4" data-type="solid" data-color="#f59e0b" title="Amber"></div>
+      <div class="color-option solid-5" data-type="solid" data-color="#8b5cf6" title="Violet"></div>
+      <div class="color-option solid-6" data-type="solid" data-color="#14b8a6" title="Teal"></div>
+      <div class="color-option solid-7" data-type="solid" data-color="#111827" title="Slate"></div>
+      <div class="color-option solid-8" data-type="solid" data-color="#1f2937" title="Charcoal"></div>
+
+      <!-- Custom Section -->
+      <div class="section-label">Custom</div>
+      <label class="custom-color">
+        <input type="color" id="customColorInput" value="#667eea" aria-label="Pick a custom color">
+        <span>Pick Color</span>
+      </label>
+    </div>
+    <button class="reset-btn" onclick="resetToDefault()">
+      <i class="fas fa-refresh"></i> Reset to Default
+    </button>
+  </div>
+
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <div class="brand">
+        <div class="logo">
+          <i class="fas fa-heartbeat"></i>
+        </div>
+        <div>
+          <h1 class="title">DiaCare Pro</h1>
+          <p class="subtitle">Advanced Diabetes Risk Assessment System</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Form Card -->
+    <div class="form-card">
+      <h2 class="form-title">Diabetes Risk Assessment</h2>
+      <p class="form-description">
+        Please provide accurate health information for comprehensive diabetes risk evaluation.
+        All fields are required for the most precise analysis.
+      </p>
+
+      <!-- Progress Bar -->
+      <div class="progress-container">
+        <div class="progress-label">
+          <span><i class="fas fa-tasks"></i> Assessment Progress</span>
+          <span id="progressText">0% Complete</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+      </div>
+
+      <form method="POST" action="/" id="assessmentForm">
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label" for="Glucose">
+              <i class="fas fa-tint"></i>
+              Blood Glucose Level
+            </label>
+            <div class="input-container">
+              <input type="number" id="Glucose" name="Glucose" class="form-input"
+                     placeholder="Enter glucose level (70-200 mg/dL)"
+                     min="0" max="300" step="0.1" required>
+              <div class="input-status" id="status-Glucose"></div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="BloodPressure">
+              <i class="fas fa-heart"></i>
+              Blood Pressure (Diastolic)
+            </label>
+            <div class="input-container">
+              <input type="number" id="BloodPressure" name="BloodPressure" class="form-input"
+                     placeholder="Enter diastolic pressure (60-100 mmHg)"
+                     min="0" max="200" step="1" required>
+              <div class="input-status" id="status-BloodPressure"></div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="SkinThickness">
+              <i class="fas fa-ruler"></i>
+              Skin Thickness
+            </label>
+            <div class="input-container">
+              <input type="number" id="SkinThickness" name="SkinThickness" class="form-input"
+                     placeholder="Triceps skin fold (10-50 mm)"
+                     min="0" max="100" step="0.1" required>
+              <div class="input-status" id="status-SkinThickness"></div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="Insulin">
+              <i class="fas fa-syringe"></i>
+              Insulin Level
+            </label>
+            <div class="input-container">
+              <input type="number" id="Insulin" name="Insulin" class="form-input"
+                     placeholder="2-hour serum insulin (15-200 μU/mL)"
+                     min="0" max="1000" step="0.1" required>
+              <div class="input-status" id="status-Insulin"></div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="BMI">
+              <i class="fas fa-weight"></i>
+              Body Mass Index
+            </label>
+            <div class="input-container">
+              <input type="number" id="BMI" name="BMI" class="form-input"
+                     placeholder="BMI (18-40 kg/m²)"
+                     min="10" max="60" step="0.1" required>
+              <div class="input-status" id="status-BMI"></div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="Pregnancies">
+              <i class="fas fa-baby"></i>
+              Number of Pregnancies
+            </label>
+            <div class="input-container">
+              <input type="number" id="Pregnancies" name="Pregnancies" class="form-input"
+                     placeholder="Total pregnancies (0-15)"
+                     min="0" max="20" step="1" required>
+              <div class="input-status" id="status-Pregnancies"></div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="Age">
+              <i class="fas fa-calendar-alt"></i>
+              Age
+            </label>
+            <div class="input-container">
+              <input type="number" id="Age" name="Age" class="form-input"
+                     placeholder="Your age (18-90 years)"
+                     min="0" max="100" step="1" required>
+              <div class="input-status" id="status-Age"></div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="DiabetesPedigreeFunction">
+              <i class="fas fa-dna"></i>
+              Diabetes Pedigree Function
+            </label>
+            <div class="input-container">
+              <input type="number" id="DiabetesPedigreeFunction" name="DiabetesPedigreeFunction" class="form-input"
+                     placeholder="Family history score (0.0-2.5)"
+                     min="0" max="3" step="0.001" required>
+              <div class="input-status" id="status-DiabetesPedigreeFunction"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="submit-container">
+          <button type="submit" class="submit-btn" id="submitBtn">
+            <i class="fas fa-chart-line"></i>
+            <span class="btn-text">Assess Diabetes Risk</span>
+            <div class="loading-spinner"></div>
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <p>&copy; 2025 DiaCare Pro - Advanced Diabetes Risk Assessment | For informational purposes only</p>
+    </div>
+  </div>
+
+  <script>
+    // Create floating particles
+    function createParticles() {
+      const particlesContainer = document.getElementById('particles');
+      const particleCount = 15;
+
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 15 + 's';
+        particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+        particlesContainer.appendChild(particle);
+      }
+    }
+
+    // Initialize particles on page load
+    document.addEventListener('DOMContentLoaded', createParticles);
+
+    // Color Picker Toggle Functionality
+    const colorPickerToggle = document.getElementById('colorPickerToggle');
+    const colorPickerContainer = document.getElementById('colorPickerContainer');
+    const colorPickerOverlay = document.getElementById('colorPickerOverlay');
+    let isColorPickerOpen = false;
+
+    function toggleColorPicker() {
+      isColorPickerOpen = !isColorPickerOpen;
+
+      if (isColorPickerOpen) {
+        colorPickerContainer.classList.add('show');
+        colorPickerOverlay.classList.add('show');
+        colorPickerToggle.classList.add('active');
+      } else {
+        colorPickerContainer.classList.remove('show');
+        colorPickerOverlay.classList.remove('show');
+        colorPickerToggle.classList.remove('active');
+      }
+    }
+
+    // Toggle button event listener
+    colorPickerToggle.addEventListener('click', toggleColorPicker);
+
+    // Click outside to close
+    colorPickerOverlay.addEventListener('click', function() {
+      if (isColorPickerOpen) {
+        toggleColorPicker();
+      }
+    });
+
+    // Prevent closing when clicking inside the color picker
+    colorPickerContainer.addEventListener('click', function(e) {
+      e.stopPropagation();
+    });
+
+    // Close on escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && isColorPickerOpen) {
+        toggleColorPicker();
+      }
+    });
+
+    // Enhanced Background Color Picker Functionality
+    function applyBackground(type, value) {
+      if (type === 'gradient') {
+        document.body.style.background = value;
+        localStorage.setItem('selectedType', 'gradient');
+        localStorage.setItem('selectedGradient', value);
+        localStorage.removeItem('selectedColor');
+      } else if (type === 'solid') {
+        document.body.style.background = value;
+        localStorage.setItem('selectedType', 'solid');
+        localStorage.setItem('selectedColor', value);
+        localStorage.removeItem('selectedGradient');
+      }
+    }
+
+    function restoreSavedBackground() {
+      const savedType = localStorage.getItem('selectedType');
+      if (savedType === 'gradient') {
+        const g = localStorage.getItem('selectedGradient');
+        if (g) {
+          document.body.style.background = g;
+          // Reflect active state
+          document.querySelectorAll('.color-option').forEach(o => {
+            o.classList.remove('active');
+            if (o.dataset.type === 'gradient' && o.dataset.gradient === g) {
+              o.classList.add('active');
+            }
+          });
+          return;
+        }
+      } else if (savedType === 'solid') {
+        const c = localStorage.getItem('selectedColor');
+        if (c) {
+          document.body.style.background = c;
+          document.querySelectorAll('.color-option').forEach(o => {
+            o.classList.remove('active');
+            if (o.dataset.type === 'solid' && o.dataset.color === c) {
+              o.classList.add('active');
+            }
+          });
+          return;
+        }
+      }
+      // Fallback: keep default gradient-1 active (already in DOM)
+    }
+
+    function resetToDefault() {
+      const defaultGradient = 'linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%)';
+      document.body.style.background = defaultGradient;
+
+      // Reset active state to gradient-1
+      document.querySelectorAll('.color-option').forEach(option => option.classList.remove('active'));
+      const def = document.querySelector('.color-option.gradient-1');
+      if (def) def.classList.add('active');
+
+      // Clear storage
+      localStorage.setItem('selectedType', 'gradient');
+      localStorage.setItem('selectedGradient', defaultGradient);
+      localStorage.removeItem('selectedColor');
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      // Restore saved background
+      restoreSavedBackground();
+
+      // Handle swatch clicks for both gradient and solid
+      document.querySelectorAll('.color-option').forEach(option => {
+        option.addEventListener('click', function() {
+          const type = this.getAttribute('data-type');
+          if (type === 'gradient') {
+            const gradient = this.getAttribute('data-gradient');
+            applyBackground('gradient', gradient);
+          } else if (type === 'solid') {
+            const color = this.getAttribute('data-color');
+            applyBackground('solid', color);
+          }
+
+          // Update active state
+          document.querySelectorAll('.color-option').forEach(opt => opt.classList.remove('active'));
+          this.classList.add('active');
+        });
+      });
+
+      // Custom color picker
+      const customInput = document.getElementById('customColorInput');
+      if (customInput) {
+        customInput.addEventListener('input', function() {
+          const color = this.value;
+          applyBackground('solid', color);
+          // Visually deselect swatches since this is a custom color
+          document.querySelectorAll('.color-option').forEach(opt => opt.classList.remove('active'));
+        });
+      }
+    });
+
+    // Health validation ranges and messages
+    const healthRanges = {
+      Glucose: {
+        optimal: [70, 99, '✅ Normal glucose level', 'success'],
+        borderline: [100, 125, '⚠️ Pre-diabetic range', 'warning'],
+        high: [126, 300, '🚨 Diabetic range', 'error']
+      },
+      BloodPressure: {
+        optimal: [60, 80, '✅ Normal blood pressure', 'success'],
+        elevated: [81, 89, '⚠️ Slightly elevated', 'warning'],
+        high: [90, 200, '🚨 High blood pressure', 'error']
+      },
+      BMI: {
+        underweight: [10, 18.4, '📉 Underweight', 'warning'],
+        normal: [18.5, 24.9, '✅ Healthy weight', 'success'],
+        overweight: [25, 29.9, '⚠️ Overweight', 'warning'],
+        obese: [30, 60, '🚨 Obese', 'error']
+      },
+      SkinThickness: {
+        normal: [10, 30, '✅ Normal range', 'success'],
+        elevated: [31, 50, '⚠️ Slightly elevated', 'warning'],
+        high: [51, 100, '🚨 High measurement', 'error']
+      },
+      Insulin: {
+        normal: [15, 100, '✅ Normal insulin level', 'success'],
+        elevated: [101, 200, '⚠️ Elevated insulin', 'warning'],
+        high: [201, 1000, '🚨 High insulin level', 'error']
+      },
+      Age: {
+        young: [18, 35, '💪 Lower age-related risk', 'success'],
+        middle: [36, 55, '⚠️ Moderate age-related risk', 'warning'],
+        senior: [56, 100, '🔍 Higher age-related risk', 'error']
+      },
+      Pregnancies: {
+        low: [0, 3, '✅ Lower pregnancy-related risk', 'success'],
+        moderate: [4, 6, '⚠️ Moderate risk', 'warning'],
+        high: [7, 20, '🚨 Higher pregnancy-related risk', 'error']
+      },
+      DiabetesPedigreeFunction: {
+        low: [0, 0.3, '✅ Low family history risk', 'success'],
+        moderate: [0.31, 0.6, '⚠️ Moderate family history', 'warning'],
+        high: [0.61, 3, '🚨 High family history risk', 'error']
+      }
+    };
+
+    const fields = Object.keys(healthRanges);
+
+    function validateField(fieldName) {
+      const input = document.getElementById(fieldName);
+      const status = document.getElementById(`status-${fieldName}`);
+      const value = parseFloat(input.value);
+
+      if (isNaN(value) || value < 0) {
+        status.className = 'input-status';
+        status.textContent = '';
+        return false;
+      }
+
+      const ranges = healthRanges[fieldName];
+      let statusClass = 'success';
+      let statusText = '✅ Good';
+
+      for (const [key, [min, max, message, type]] of Object.entries(ranges)) {
+        if (value >= min && value <= max) {
+          statusClass = type;
+          statusText = message;
+          break;
+        }
+      }
+
+      status.className = `input-status show ${statusClass}`;
+      status.textContent = statusText;
+      return true;
+    }
+
+    function updateProgress() {
+      let validCount = 0;
+      fields.forEach(field => {
+        if (validateField(field)) validCount++;
+      });
+
+      const percentage = Math.round((validCount / fields.length) * 100);
+      document.getElementById('progressFill').style.width = `${percentage}%`;
+      document.getElementById('progressText').textContent = `${percentage}% Complete`;
+
+      const submitBtn = document.getElementById('submitBtn');
+      submitBtn.disabled = percentage < 100;
+
+      // Add visual feedback for completion
+      if (percentage === 100) {
+        document.getElementById('progressText').innerHTML = '<i class="fas fa-check-circle"></i> Ready to Submit!';
+      }
+    }
+
+    // Add event listeners with enhanced feedback
+    fields.forEach(field => {
+      const input = document.getElementById(field);
+      input.addEventListener('input', updateProgress);
+      input.addEventListener('blur', updateProgress);
+
+      // Add focus effects
+      input.addEventListener('focus', () => {
+        input.parentElement.style.transform = 'scale(1.02)';
+      });
+
+      input.addEventListener('blur', () => {
+        input.parentElement.style.transform = 'scale(1)';
+      });
+    });
+
+    // Enhanced form submission
+    document.getElementById('assessmentForm').addEventListener('submit', function(e) {
+      const submitBtn = document.getElementById('submitBtn');
+      const btnText = submitBtn.querySelector('.btn-text');
+      const spinner = submitBtn.querySelector('.loading-spinner');
+
+      btnText.textContent = 'Analyzing Health Data...';
+      spinner.style.display = 'block';
+      submitBtn.disabled = true;
+
+      // Add pulsing effect during submission
+      submitBtn.style.animation = 'pulse 1.5s infinite';
+
+      // Show completion message after 2 seconds (for demo)
+      setTimeout(() => {
+        btnText.textContent = 'Processing Complete!';
+      }, 2000);
+    });
+
+    // Initial progress update
+    updateProgress();
+
+    // Add smooth scrolling for better UX
+    document.querySelectorAll('input').forEach(input => {
+      input.addEventListener('focus', () => {
+        setTimeout(() => {
+          input.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center'
+          });
+        }, 100);
+      });
+    });
+  </script>
+</body>
+</html>
