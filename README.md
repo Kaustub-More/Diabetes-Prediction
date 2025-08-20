@@ -51,3 +51,5 @@ python diabeties_pred.py
 
 
 Open http://127.0.0.1:5000 in your browser.
+
+🌐 [Project Live Demo](https://kaustubmore2525.pythonanywhere.com/)
